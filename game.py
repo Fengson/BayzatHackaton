@@ -228,6 +228,29 @@ class Game(object):
 					self.keypressed = 1
 
 				self.drawMap()
+
+				self.surface.fill(pygame.Color("black"), (658,128, 150, 50))
+				self.surface.fill(pygame.Color("black"), (658,192, 150, 50))			
+				self.surface.fill(pygame.Color("black"), (750,355, 50, 50))
+				self.surface.fill(pygame.Color("black"), (655,352, 100, 100))
+
+
+				font = pygame.font.Font(None, 36)
+				small_font = pygame.font.Font(None, 26)
+
+				keys_text = font.render("Keys:", 1, (255, 255, 255))
+				self.surface.blit(keys_text, (655,320))
+
+				if self.key > 0:
+					orange_keys_text = small_font.render("Orange: " + str(self.key), 1, (255, 255, 255))
+					self.surface.blit(orange_keys_text, (655,352))
+				else :
+					orange_keys_text = small_font.render("0 available.", 1, (255, 255, 255))
+					self.surface.blit(orange_keys_text, (655,352))
+
+				block_text = font.render("Blocks: " + str(self.current_total) + " / " + str(self.level_total), 1, (255, 255, 255))
+				self.surface.blit(block_text, (655,128))
+
 				pygame.display.flip()
 
 				if event.type == KEYUP:
