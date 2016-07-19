@@ -22,6 +22,7 @@ class Game(object):
 		self.level_num = level_num
 		self.level = "level" + str(level_num)
 		self.current_total = 0
+		self.key = 0
 		
 		self.level_total = level_data[self.level + "_total"]
 
@@ -69,7 +70,7 @@ class Game(object):
 		 	if next_step == 1:
 				self.swap(x, y)
 			else:
-				# Purple block
+				# Purple doc
 				if next_step == 6:
 					if x == 1 and self.player.x + x + 1 < MAP_WIDTH and self.current_map[self.player.x + x + 1][self.player.y + y].block_type in [1,6,7]:
 						self.swap(x,y)
@@ -87,6 +88,19 @@ class Game(object):
 						pass
 				else:
 					pass
+
+				# Key
+				if next_step == 9:
+					self.swap(x,y)
+					self.key += 1
+
+				# Lock
+				if next_step == 10:
+					if self.key > 0:
+						self.key -= 1
+						self.swap(x,y)
+					else:
+						print "Doors locked! - Play sound?"
 
 	def checkIfPlacedOnCorrectTile(self, x, y, correctTile):
 		if self.current_map[self.player.x + x][self.player.y + y].block_type == correctTile:

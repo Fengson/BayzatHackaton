@@ -19,12 +19,12 @@ level1_total = 3
 
 level2 = [[2,2,2,2,2,2,2,2,2,2],
       	  [2,2,2,2,2,2,2,2,2,2],
-	      [2,2,1,1,1,5,1,1,2,2],
+	      [2,2,1,1,1,10,1,1,2,2],
 	      [2,2,1,2,2,2,2,1,2,2],
 	      [2,2,1,2,2,2,2,6,2,2],
 	      [2,2,1,2,2,2,2,1,2,2],
 	      [2,2,1,2,2,2,2,7,2,2],
-	      [2,2,5,2,2,2,2,2,2,2],
+	      [2,2,9,2,2,2,2,2,2,2],
 	      [2,2,2,2,2,2,2,2,2,2],
 	      [2,2,2,2,2,2,2,2,2,2]]
 level2 = [list(i) for i in zip(*level2)]
@@ -48,3 +48,6 @@ tiles[5] = pygame.image.load('images/water.png')
 tiles[6] = pygame.image.load('images/document_purple.png')
 tiles[7] = pygame.image.load('images/purple-start.png')
 tiles[8] = pygame.image.load('images/purple_end.png')
+tiles[9] = pygame.image.load('images/key.png')
+tiles[10] = pygame.image.load('images/lock.png')
+
