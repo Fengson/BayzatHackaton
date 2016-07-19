@@ -37,6 +37,9 @@ class Game(object):
 		self.teleport_sound = pygame.mixer.Sound("sounds/teleport.wav")
 		self.document_sound = pygame.mixer.Sound("sounds/place-doc.wav")
 
+		self.music = pygame.mixer.Sound("sounds/drums.wav")
+		self.music.play(-1,0)
+
 		MAP = level_data[self.level]
 
 		# Map
@@ -196,8 +199,10 @@ class Game(object):
 
 		if next_lvl <= total_levels - 1:
 			next_lvl += 1
+			self.music.stop()
 			Game(next_lvl)
 		else:
+			self.music.stop()
 			self.victory()
 
 	def victory(self):
