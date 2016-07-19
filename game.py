@@ -8,8 +8,9 @@ screen_size = (800,640)
 MAP_WIDTH  = 10
 MAP_HEIGHT = 10
 
-level_data = {"level1" : level1, "level1_total" : level1_total, "level1_x" : level1_player_x, "level1_y" : level1_player_y,
-			  "level2" : level2, "level2_total" : level2_total, "level2_x" : level2_player_x, "level2_y" : level2_player_y}
+level_data = {"level1" : level1, "level1_total" : level1_total, "level1_x" : level1_player_x, "level1_y" : level1_player_y, "level1_teleport_ins": level1_teleport_ins, "level1_teleport_outs" : level1_teleport_outs,
+			  "level2" : level2, "level2_total" : level2_total, "level2_x" : level2_player_x, "level2_y" : level2_player_y, "level2_teleport_ins": level2_teleport_ins, "level2_teleport_outs" : level2_teleport_outs,
+			  "level3" : level3, "level3_total" : level3_total, "level3_x" : level3_player_x, "level3_y" : level3_player_y, "level3_teleport_ins": level3_teleport_ins, "level3_teleport_outs" : level3_teleport_outs}
 
 class Game(object):
 	def __init__(self, level_num=1):
@@ -25,6 +26,8 @@ class Game(object):
 		self.key = 0
 		
 		self.level_total = level_data[self.level + "_total"]
+		self.level_teleport_ins = level_data[self.level + "_teleport_ins"]
+		self.level_teleport_outs = level_data[self.level + "_teleport_outs"]
 
 		self.music = pygame.mixer.Sound("sounds/drums.wav")
 		self.music.stop()
@@ -47,6 +50,7 @@ class Game(object):
 		self.player_angle = 0
 		self.current_map[player_init_x][player_init_y] = self.player
 
+		self.revert_array = []
 
 		self.loop()
 
@@ -101,6 +105,19 @@ class Game(object):
 						self.swap(x,y)
 					else:
 						print "Doors locked! - Play sound?"
+
+				if next_step == 11:
+					pos = (self.player.x + x, self.player.y + y)
+					if pos in self.level_teleport_ins:
+						idx = self.level_teleport_ins.index(pos)
+						out_pos = self.level_teleport_outs[idx]
+						self.current_map[self.player.x][self.player.y].block_type = 1
+						self.current_map[out_pos[0]][out_pos[1]].block_type = 0
+						self.player.x = out_pos[0]
+						self.player.y = out_pos[1]
+						
+						if [out_pos, next_step] not in self.revert_array:
+							self.revert_array.append([out_pos, 19])
 
 	def checkIfPlacedOnCorrectTile(self, x, y, correctTile):
 		if self.current_map[self.player.x + x][self.player.y + y].block_type == correctTile:
