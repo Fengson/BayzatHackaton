@@ -13,8 +13,9 @@ level1 = [[2,2,2,2,2,2,2,2,2,2],
 	      [2,2,2,2,2,2,2,2,2,2],
 	      [2,2,2,2,2,2,2,2,2,2]]
 level1 = [list(i) for i in zip(*level1)]
-level1_x = 1
-level1_y = 1
+level1_player_x = 1
+level1_player_y = 1
+level1_total = 3
 
 level2 = [[1,1,1,1,1,1,1,1,4,4],
       	  [1,1,1,1,1,1,1,1,4,4],
@@ -27,8 +28,9 @@ level2 = [[1,1,1,1,1,1,1,1,4,4],
 	      [1,1,1,1,1,1,1,1,1,1],
 	      [1,1,1,1,1,1,1,1,1,1]]
 level2 = [list(i) for i in zip(*level2)]
-level2_x = 3
-level2_y = 3
+level2_player_x = 3
+level2_player_y = 3
+level2_total = 3
 
 
 tiles = [None] * 25
