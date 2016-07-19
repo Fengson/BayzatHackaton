@@ -43,9 +43,14 @@ class Game(object):
 		for x in range(MAP_WIDTH):
 			for y in range(MAP_HEIGHT):
 				tile = self.current_map[x][y].block_type
-				self.surface.blit(tiles[tile], (x*64,y*64))
+				if tile == 0:
+					self.surface.blit(pygame.transform.rotate(tiles[tile], self.player_angle), (x*64,y*64))
+				else:
+					self.surface.blit(tiles[tile], (x*64,y*64))
 
 	def move(self, x, y, angle):
+		self.player_angle = angle
+
 		if self.player.x + x >= 0 and self.player.x + x < MAP_WIDTH and self.player.y + y >= 0 and self.player.y + y < MAP_HEIGHT:
 
 			next_step = self.current_map[self.player.x + x][self.player.y + y].block_type
