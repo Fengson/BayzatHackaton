@@ -8,7 +8,8 @@ screen_size = (800,640)
 MAP_WIDTH  = 10
 MAP_HEIGHT = 10
 
-level_data = {"level1" : level1, "level2" : level2}
+level_data = {"level1" : level1, "level1_total" : level1_total, "level1_x" : level1_player_x, "level1_y" : level1_player_y,
+			  "level2" : level2, "level2_total" : level2_total, "level2_x" : level2_player_x, "level2_y" : level2_player_y}
 
 class Game(object):
 	def __init__(self, level_num=1):
@@ -21,10 +22,13 @@ class Game(object):
 		self.level_num = level_num
 		self.level = "level" + str(level_num)
 		self.current_total = 0
+		self.key = 0
 		
-		self.level_total = 3 # Total amount of documents
+		self.level_total = level_data[self.level + "_total"]
 
-		print self.level
+		self.music = pygame.mixer.Sound("sounds/drums.wav")
+		self.music.stop()
+		self.music.play()
 
 		MAP = level_data[self.level]
 
@@ -37,8 +41,8 @@ class Game(object):
 		self.surface = pygame.display.set_mode(screen_size, DOUBLEBUF)
 
 		# Player
-		player_init_x = 1
-		player_init_y = 1
+		player_init_x = level_data[self.level + "_x"]
+		player_init_y = level_data[self.level + "_y"]
 		self.player = Block(0, player_init_x * 64, player_init_y * 64)
 		self.player_angle = 0
 		self.current_map[player_init_x][player_init_y] = self.player
@@ -66,7 +70,7 @@ class Game(object):
 		 	if next_step == 1:
 				self.swap(x, y)
 			else:
-				# Purple block
+				# Purple doc
 				if next_step == 6:
 					if x == 1 and self.player.x + x + 1 < MAP_WIDTH and self.current_map[self.player.x + x + 1][self.player.y + y].block_type in [1,6,7]:
 						self.swap(x,y)
@@ -84,6 +88,19 @@ class Game(object):
 						pass
 				else:
 					pass
+
+				# Key
+				if next_step == 9:
+					self.swap(x,y)
+					self.key += 1
+
+				# Lock
+				if next_step == 10:
+					if self.key > 0:
+						self.key -= 1
+						self.swap(x,y)
+					else:
+						print "Doors locked! - Play sound?"
 
 	def checkIfPlacedOnCorrectTile(self, x, y, correctTile):
 		if self.current_map[self.player.x + x][self.player.y + y].block_type == correctTile:
