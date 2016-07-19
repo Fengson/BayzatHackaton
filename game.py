@@ -30,9 +30,15 @@ class Game(object):
 		self.level_teleport_ins = level_data[self.level + "_teleport_ins"]
 		self.level_teleport_outs = level_data[self.level + "_teleport_outs"]
 
-		self.music = pygame.mixer.Sound("sounds/drums.wav")
-		self.music.stop()
-		self.music.play()
+		#self.music = pygame.mixer.Sound("sounds/drums.wav")
+		#self.music.stop()
+		#self.music.play()
+
+		self.doors_locked_sound = pygame.mixer.Sound("sounds/door-locked.wav")
+		self.doors_open_sound = pygame.mixer.Sound("sounds/door-open.wav")
+		self.move_sound = pygame.mixer.Sound("sounds/move.wav")
+		self.teleport_sound = pygame.mixer.Sound("sounds/teleport.wav")
+		self.document_sound = pygame.mixer.Sound("sounds/place-doc.wav")
 
 		MAP = level_data[self.level]
 
@@ -71,6 +77,8 @@ class Game(object):
 
 			next_step = self.current_map[self.player.x + x][self.player.y + y].block_type
 			next_pos =  (self.current_map[self.player.x + x][self.player.y + y].x, self.current_map[self.player.x + x][self.player.y + y].y)
+
+			self.move_sound.play()
 
 		 	if next_step == 1:
 				self.swap(x, y)
@@ -121,14 +129,17 @@ class Game(object):
 				# Lock
 				if next_step == 10:
 					if self.key > 0:
+						self.move_sound.stop()
+						self.doors_open_sound.play()
 						self.key -= 1
 						self.swap(x,y)
 					else:
-						print "Doors locked! - Play sound?"
+						self.doors_locked_sound.play()
 
 				if next_step == 11:
 					pos = (self.player.x + x, self.player.y + y)
 					if pos in self.level_teleport_ins:
+						self.teleport_sound.play()
 						idx = self.level_teleport_ins.index(pos)
 						out_pos = self.level_teleport_outs[idx]
 						self.current_map[self.player.x][self.player.y].block_type = 1
@@ -142,12 +153,14 @@ class Game(object):
 	def checkIfPlacedOnCorrectTile(self, x, y, correctTile):
 		if self.current_map[self.player.x + x][self.player.y + y].block_type == correctTile:
 			self.current_total += 1
+			
+			self.move_sound.stop()
+			self.document_sound.play()
 
 			self.current_map[self.player.x + x][self.player.y + y].block_type = correctTile + 1
 
 			# All checks passed
 			if self.current_total == self.level_total:
-				print "end"
 				self.finish_current()
 
 		else:
@@ -172,7 +185,6 @@ class Game(object):
 			self.victory()
 
 	def victory(self):
-		self.music.stop()
 		Victory()		
 
 	def loop(self):
@@ -206,11 +218,13 @@ class Game(object):
 class Victory(object):
 	def __init__(self):
 		pygame.init()
-		self.victory_screen_size = (646,218)
-		self.surface = pygame.display.set_mode(self.victory_screen_size, DOUBLEBUF)
+		self.surface = pygame.display.set_mode(screen_size, DOUBLEBUF)
 		self.gamestate = 1
 
 		self.screen = pygame.image.load('images/victory.png')
+		self.music = pygame.mixer.Sound("sounds/victory.wav")
+		self.music.stop()
+		self.music.play()
 
 		self.loop()
 
