@@ -10,7 +10,8 @@ MAP_HEIGHT = 10
 
 level_data = {"level1" : level1, "level1_total" : level1_total, "level1_x" : level1_player_x, "level1_y" : level1_player_y, "level1_teleport_ins": level1_teleport_ins, "level1_teleport_outs" : level1_teleport_outs,
 			  "level2" : level2, "level2_total" : level2_total, "level2_x" : level2_player_x, "level2_y" : level2_player_y, "level2_teleport_ins": level2_teleport_ins, "level2_teleport_outs" : level2_teleport_outs,
-			  "level3" : level3, "level3_total" : level3_total, "level3_x" : level3_player_x, "level3_y" : level3_player_y, "level3_teleport_ins": level3_teleport_ins, "level3_teleport_outs" : level3_teleport_outs}
+			  "level3" : level3, "level3_total" : level3_total, "level3_x" : level3_player_x, "level3_y" : level3_player_y, "level3_teleport_ins": level3_teleport_ins, "level3_teleport_outs" : level3_teleport_outs,
+			  "level4" : level4, "level4_total" : level4_total, "level4_x" : level4_player_x, "level4_y" : level4_player_y, "level4_teleport_ins": level4_teleport_ins, "level4_teleport_outs" : level4_teleport_outs}
 
 class Game(object):
 	def __init__(self, level_num=1):
@@ -93,6 +94,25 @@ class Game(object):
 				else:
 					pass
 
+				# Bayzat doc
+				if next_step == 13:
+					if x == 1 and self.player.x + x + 1 < MAP_WIDTH and self.current_map[self.player.x + x + 1][self.player.y + y].block_type in [1,13,14]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 14)
+					elif x == -1 and self.player.x + x - 1 >= 0 and self.current_map[self.player.x + x - 1][self.player.y + y].block_type in [1,13,14]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 14)
+					elif y == 1 and self.player.y + y + 1 < MAP_HEIGHT and self.current_map[self.player.x + x][self.player.y + y + 1].block_type in [1,13,14]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 14)
+					elif y == -1 and self.player.y + y - 1 >= 0 and self.current_map[self.player.x + x][self.player.y + y - 1].block_type in [1,13,14]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 14)
+					else:
+						pass
+				else:
+					pass
+
 				# Key
 				if next_step == 9:
 					self.swap(x,y)
@@ -149,7 +169,11 @@ class Game(object):
 			next_lvl += 1
 			Game(next_lvl)
 		else:
-			print "THE END"
+			self.victory()
+
+	def victory(self):
+		self.music.stop()
+		Victory()		
 
 	def loop(self):
 		while self.gamestate == 1:
@@ -178,6 +202,31 @@ class Game(object):
 
 		if self.esc_pressed == 0:
 			self.next_level()
+
+class Victory(object):
+	def __init__(self):
+		pygame.init()
+		self.victory_screen_size = (646,218)
+		self.surface = pygame.display.set_mode(self.victory_screen_size, DOUBLEBUF)
+		self.gamestate = 1
+
+		self.screen = pygame.image.load('images/victory.png')
+
+		self.loop()
+
+	def game_exit(self):
+		exit()
+ 
+	def loop(self):
+		while self.gamestate==1:
+			for event in pygame.event.get():
+				if event.type==QUIT or (event.type==KEYDOWN and event.key==K_ESCAPE):
+					self.gamestate=0
+
+			self.surface.blit(self.screen, (0,0))
+			pygame.display.flip()
+			
+		self.game_exit()
 
 if __name__ == '__main__':
 	Game(1)

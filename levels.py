@@ -1,6 +1,6 @@
 import pygame
 
-total_levels = 3
+total_levels = 4
 
 level1 = [[2,2,2,2,2,2,2,2,2,2],
       	  [2,1,1,6,1,1,7,2,2,2],
@@ -55,6 +55,25 @@ level3_hidden_fields = 0
 level3_teleport_ins = [(0,3), (6,3)]
 level3_teleport_outs = [(7,0), (5,6)]
 
+level4 = [[5,5,5,5,5,5,5,5,5,5],
+      	  [5,5,5,1,1,1,1,5,5,5],
+	      [5,5,5,1,1,1,1,5,5,5],
+	      [5,1,1,1,1,1,1,1,1,5],
+	      [5,1,1,1,13,1,1,14,1,5],
+	      [5,1,1,1,1,1,1,1,1,5],
+	      [5,1,1,1,1,1,1,1,1,5],
+	      [5,5,5,1,1,1,1,5,5,5],
+	      [5,5,5,1,1,1,1,5,5,5],
+	      [5,5,5,5,5,5,5,5,5,5]]
+level4 = [list(i) for i in zip(*level4)]
+level4_total = 1
+level4_total_moves = 1000
+level4_player_x = 1
+level4_player_y = 3
+level4_hidden_fields = 0
+level4_teleport_ins = []
+level4_teleport_outs = []
+
 
 tiles = [None] * 25
 # 0 - Jenny (Player)
@@ -75,4 +94,7 @@ tiles[9] = pygame.image.load('images/key.png')
 tiles[10] = pygame.image.load('images/lock.png')
 tiles[11] = pygame.image.load('images/teleport_in.png')
 tiles[12] = pygame.image.load('images/teleport_out.png')
+tiles[13] = pygame.image.load('images/document_green.png')
+tiles[14] = pygame.image.load('images/green-start.png')
+tiles[15] = pygame.image.load('images/green-end.png')
 
