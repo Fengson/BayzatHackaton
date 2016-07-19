@@ -1,13 +1,13 @@
 import pygame
 
-total_levels = 4
+total_levels = 5
 
 level1 = [[2,2,2,2,2,2,2,2,2,2],
       	  [2,1,1,6,1,1,7,2,2,2],
 	      [2,1,1,2,2,1,2,2,2,2],
 	      [2,2,2,2,2,1,3,2,2,2],
 	      [2,2,2,2,2,6,2,2,2,2],
-	      [2,7,1,6,1,1,2,2,2,2],
+	      [2,18,1,17,1,1,2,2,2,2],
 	      [2,2,2,2,2,7,2,2,2,2],
 	      [2,2,2,2,2,2,2,2,2,2],
 	      [2,2,2,2,2,2,2,2,2,2],
@@ -55,7 +55,26 @@ level3_hidden_fields = 0
 level3_teleport_ins = [(0,3), (6,3)]
 level3_teleport_outs = [(7,0), (5,6)]
 
-level4 = [[5,5,5,5,5,5,5,5,5,5],
+level4 = [[1,1,1,1,1,1,1,1,1,1],
+      	  [5,5,5,5,5,5,5,5,5,1],
+	      [5,5,5,5,5,5,5,12,5,1],
+	      [5,11,5,5,12,5,11,1,1,1],
+	      [5,1,5,5,1,5,5,11,5,1],
+	      [5,1,1,1,1,5,5,5,5,1],
+	      [5,5,5,5,5,5,5,5,5,5],
+	      [5,12,5,5,5,12,1,11,5,5],
+	      [5,1,17,1,18,5,5,5,5,5],
+	      [5,5,5,5,5,5,5,5,5,5]]
+level4 = [list(i) for i in zip(*level4)]
+level4_total = 1
+level4_total_moves = 30
+level4_player_x = 0
+level4_player_y = 0
+level4_hidden_fields = 0
+level4_teleport_ins = [(6,3),(7,7),(7,4),(1,3)]
+level4_teleport_outs = [(5,7),(7,2),(4,3),(1,7)]
+
+level5 = [[5,5,5,5,5,5,5,5,5,5],
       	  [5,5,5,1,1,1,1,5,5,5],
 	      [5,5,5,1,1,1,1,5,5,5],
 	      [5,1,1,1,1,1,1,1,1,5],
@@ -65,17 +84,17 @@ level4 = [[5,5,5,5,5,5,5,5,5,5],
 	      [5,5,5,1,1,1,1,5,5,5],
 	      [5,5,5,1,1,1,1,5,5,5],
 	      [5,5,5,5,5,5,5,5,5,5]]
-level4 = [list(i) for i in zip(*level4)]
-level4_total = 1
-level4_total_moves = 1000
-level4_player_x = 1
-level4_player_y = 3
-level4_hidden_fields = 0
-level4_teleport_ins = []
-level4_teleport_outs = []
+level5 = [list(i) for i in zip(*level5)]
+level5_total = 1
+level5_total_moves = 1000
+level5_player_x = 1
+level5_player_y = 3
+level5_hidden_fields = 0
+level5_teleport_ins = []
+level5_teleport_outs = []
 
 
-tiles = [None] * 25
+tiles = [None] * 20
 # 0 - Jenny (Player)
 # 1 - Default sidewalk / road
 # 2 - Water (barrier)
@@ -98,4 +117,7 @@ tiles[13] = pygame.image.load('images/document_green.png')
 tiles[14] = pygame.image.load('images/green-start.png')
 tiles[15] = pygame.image.load('images/green-end.png')
 tiles[16] = pygame.image.load('images/building_1.png')
+tiles[17] = pygame.image.load('images/document_red.png')
+tiles[18] = pygame.image.load('images/red-start.png')
+tiles[19] = pygame.image.load('images/red-end.png')
 

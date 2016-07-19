@@ -11,7 +11,8 @@ MAP_HEIGHT = 10
 level_data = {"level1" : level1, "level1_total" : level1_total, "level1_x" : level1_player_x, "level1_y" : level1_player_y, "level1_teleport_ins": level1_teleport_ins, "level1_teleport_outs" : level1_teleport_outs,
 			  "level2" : level2, "level2_total" : level2_total, "level2_x" : level2_player_x, "level2_y" : level2_player_y, "level2_teleport_ins": level2_teleport_ins, "level2_teleport_outs" : level2_teleport_outs,
 			  "level3" : level3, "level3_total" : level3_total, "level3_x" : level3_player_x, "level3_y" : level3_player_y, "level3_teleport_ins": level3_teleport_ins, "level3_teleport_outs" : level3_teleport_outs,
-			  "level4" : level4, "level4_total" : level4_total, "level4_x" : level4_player_x, "level4_y" : level4_player_y, "level4_teleport_ins": level4_teleport_ins, "level4_teleport_outs" : level4_teleport_outs}
+			  "level4" : level4, "level4_total" : level4_total, "level4_x" : level4_player_x, "level4_y" : level4_player_y, "level4_teleport_ins": level4_teleport_ins, "level4_teleport_outs" : level4_teleport_outs,
+			  "level5" : level5, "level5_total" : level5_total, "level5_x" : level5_player_x, "level5_y" : level5_player_y, "level5_teleport_ins": level5_teleport_ins, "level5_teleport_outs" : level5_teleport_outs}
 
 class Game(object):
 	def __init__(self, level_num=1):
@@ -29,10 +30,6 @@ class Game(object):
 		self.level_total = level_data[self.level + "_total"]
 		self.level_teleport_ins = level_data[self.level + "_teleport_ins"]
 		self.level_teleport_outs = level_data[self.level + "_teleport_outs"]
-
-		#self.music = pygame.mixer.Sound("sounds/drums.wav")
-		#self.music.stop()
-		#self.music.play()
 
 		self.doors_locked_sound = pygame.mixer.Sound("sounds/door-locked.wav")
 		self.doors_open_sound = pygame.mixer.Sound("sounds/door-open.wav")
@@ -97,6 +94,25 @@ class Game(object):
 					elif y == -1 and self.player.y + y - 1 >= 0 and self.current_map[self.player.x + x][self.player.y + y - 1].block_type in [1,6,7]:
 						self.swap(x,y)
 						self.checkIfPlacedOnCorrectTile(x, y, 7)
+					else:
+						pass
+				else:
+					pass
+
+				# Red doc
+				if next_step == 17:
+					if x == 1 and self.player.x + x + 1 < MAP_WIDTH and self.current_map[self.player.x + x + 1][self.player.y + y].block_type in [1,17,18]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 18)
+					elif x == -1 and self.player.x + x - 1 >= 0 and self.current_map[self.player.x + x - 1][self.player.y + y].block_type in [1,17,18]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 18)
+					elif y == 1 and self.player.y + y + 1 < MAP_HEIGHT and self.current_map[self.player.x + x][self.player.y + y + 1].block_type in [1,17,18]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 18)
+					elif y == -1 and self.player.y + y - 1 >= 0 and self.current_map[self.player.x + x][self.player.y + y - 1].block_type in [1,17,18]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 18)
 					else:
 						pass
 				else:
