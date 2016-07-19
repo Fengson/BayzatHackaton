@@ -18,6 +18,8 @@ class Game(object):
 		self.gamestate = 1
 		self.keypressed = 0
 		self.level = "level1"
+		self.current_total = 0
+		self.level_total = 3 # change this later
 
 		MAP = level_data["level1"]
 
@@ -58,6 +60,38 @@ class Game(object):
 
 		 	if next_step == 1:
 				self.swap(x, y)
+			else:
+				# Purple block
+				if next_step == 6:
+					if x == 1 and self.player.x + x + 1 < MAP_WIDTH and self.current_map[self.player.x + x + 1][self.player.y + y].block_type in [1,6,7]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 7)
+					elif x == -1 and self.player.x + x - 1 >= 0 and self.current_map[self.player.x + x - 1][self.player.y + y].block_type in [1,6,7]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 7)
+					elif y == 1 and self.player.y + y + 1 < MAP_HEIGHT and self.current_map[self.player.x + x][self.player.y + y + 1].block_type in [1,6,7]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 7)
+					elif y == -1 and self.player.y + y - 1 >= 0 and self.current_map[self.player.x + x][self.player.y + y - 1].block_type in [1,6,7]:
+						self.swap(x,y)
+						self.checkIfPlacedOnCorrectTile(x, y, 7)
+					else:
+						pass
+				else:
+					pass
+
+	def checkIfPlacedOnCorrectTile(self, x, y, correctTile):
+		if self.current_map[self.player.x + x][self.player.y + y].block_type == correctTile:
+			self.current_total += 1
+
+			self.current_map[self.player.x + x][self.player.y + y].block_type = correctTile + 1
+
+			# All checks passed
+			if self.current_total == self.level_total:
+				print "End of Level"
+
+		else:
+			self.current_map[self.player.x + x][self.player.y + y].block_type = correctTile - 1
 
 	def swap(self, x, y):
 		self.current_map[self.player.x + x][self.player.y + y].block_type = 0
