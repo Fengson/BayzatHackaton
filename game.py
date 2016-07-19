@@ -165,9 +165,6 @@ class Game(object):
 						self.current_map[out_pos[0]][out_pos[1]].block_type = 0
 						self.player.x = out_pos[0]
 						self.player.y = out_pos[1]
-						
-						if [out_pos, next_step] not in self.revert_array:
-							self.revert_array.append([out_pos, 19])
 
 	def checkIfPlacedOnCorrectTile(self, x, y, correctTile):
 		if self.current_map[self.player.x + x][self.player.y + y].block_type == correctTile:
@@ -248,7 +245,7 @@ class Game(object):
 					orange_keys_text = small_font.render("0 available.", 1, (255, 255, 255))
 					self.surface.blit(orange_keys_text, (655,352))
 
-				block_text = font.render("Blocks: " + str(self.current_total) + " / " + str(self.level_total), 1, (255, 255, 255))
+				block_text = font.render("Docs: " + str(self.current_total) + " / " + str(self.level_total), 1, (255, 255, 255))
 				self.surface.blit(block_text, (655,128))
 
 				pygame.display.flip()
