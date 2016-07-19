@@ -5,7 +5,7 @@ total_levels = 4
 level1 = [[2,2,2,2,2,2,2,2,2,2],
       	  [2,1,1,6,1,1,7,2,2,2],
 	      [2,1,1,2,2,1,2,2,2,2],
-	      [2,2,2,2,2,1,2,2,2,2],
+	      [2,2,2,2,2,1,3,2,2,2],
 	      [2,2,2,2,2,6,2,2,2,2],
 	      [2,7,1,6,1,1,2,2,2,2],
 	      [2,2,2,2,2,7,2,2,2,2],
@@ -20,7 +20,7 @@ level1_teleport_ins = []
 level1_teleport_outs = []
 
 level2 = [[2,2,2,2,2,2,2,2,2,2],
-      	  [2,2,2,2,2,2,2,2,2,2],
+      	  [2,2,2,2,2,16,2,2,2,2],
 	      [2,2,1,1,1,10,1,1,2,2],
 	      [2,2,1,2,2,2,2,1,2,2],
 	      [2,2,1,2,2,2,2,6,2,2],
@@ -97,4 +97,5 @@ tiles[12] = pygame.image.load('images/teleport_out.png')
 tiles[13] = pygame.image.load('images/document_green.png')
 tiles[14] = pygame.image.load('images/green-start.png')
 tiles[15] = pygame.image.load('images/green-end.png')
+tiles[16] = pygame.image.load('images/building_1.png')
 
