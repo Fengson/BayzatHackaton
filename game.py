@@ -15,13 +15,14 @@ class Game(object):
 		pygame.init()
 		self.width = 640
 		self.height = 480
+		self.esc_pressed = 0
 		self.gamestate = 1
 		self.keypressed = 0
 		self.level_num = level_num
 		self.level = "level" + str(level_num)
 		self.current_total = 0
 		
-		self.level_total = 1 # Total amount of documents
+		self.level_total = 3 # Total amount of documents
 
 		print self.level
 
@@ -120,8 +121,8 @@ class Game(object):
 		while self.gamestate == 1:
 			for event in pygame.event.get():
 				if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+					self.esc_pressed = 1
 					self.gamestate = 0
-
 				if event.type == KEYDOWN and event.key == pygame.K_s and self.keypressed == 0:
 					self.move(0, 1, 0)
 					self.keypressed = 1
@@ -141,7 +142,8 @@ class Game(object):
 				if event.type == KEYUP:
 					self.keypressed = 0
 
-		self.next_level()
+		if self.esc_pressed == 0:
+			self.next_level()
 
 if __name__ == '__main__':
 	Game(1)
