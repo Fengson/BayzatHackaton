@@ -16,24 +16,33 @@ class Game(object):
 		self.width = 640
 		self.height = 480
 		self.gamestate = 1
-		self.player_angle = 0
-		#self.level = level1
+		self.level = "level1"
 
 		MAP = level_data["level1"]
 
+		# Map
 		self.current_map = [[0 for x in range(MAP_WIDTH)] for x in range(MAP_HEIGHT)] 
 		for x in range(MAP_WIDTH):
 			for y in range(MAP_HEIGHT):
 				self.current_map[x][y] = Block(MAP[x][y], x * 64, y * 64)
 
 		self.surface = pygame.display.set_mode(screen_size, DOUBLEBUF)
+
+		# Player
+		player_init_x = 1
+		player_init_y = 1
+		self.player = Block(0, player_init_x * 64, player_init_y * 64)
+		self.player_angle = 0
+		self.current_map[player_init_x][player_init_y] = self.player
+
+
 		self.loop()
 
 	def drawMap(self):
 		for x in range(MAP_WIDTH):
 			for y in range(MAP_HEIGHT):
 				tile = self.current_map[x][y].block_type
-				self.surface.blit(pygame.transform.rotate(tiles[tile], self.player_angle), (x*64,y*64))
+				self.surface.blit(tiles[tile], (x*64,y*64))
 
 	def loop(self):
 		while self.gamestate == 1:
