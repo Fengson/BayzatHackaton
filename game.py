@@ -8,20 +8,24 @@ screen_size = (800,640)
 MAP_WIDTH  = 10
 MAP_HEIGHT = 10
 
-level_data = {"level1" : level1}
+level_data = {"level1" : level1, "level2" : level2}
 
 class Game(object):
-	def __init__(self):
+	def __init__(self, level_num=1):
 		pygame.init()
 		self.width = 640
 		self.height = 480
 		self.gamestate = 1
 		self.keypressed = 0
-		self.level = "level1"
+		self.level_num = level_num
+		self.level = "level" + str(level_num)
 		self.current_total = 0
-		self.level_total = 3 # change this later
+		
+		self.level_total = 1 # Total amount of documents
 
-		MAP = level_data["level1"]
+		print self.level
+
+		MAP = level_data[self.level]
 
 		# Map
 		self.current_map = [[0 for x in range(MAP_WIDTH)] for x in range(MAP_HEIGHT)] 
@@ -88,7 +92,8 @@ class Game(object):
 
 			# All checks passed
 			if self.current_total == self.level_total:
-				print "End of Level"
+				print "end"
+				self.finish_current()
 
 		else:
 			self.current_map[self.player.x + x][self.player.y + y].block_type = correctTile - 1
@@ -98,6 +103,18 @@ class Game(object):
 		self.current_map[self.player.x][self.player.y].block_type = 1
 		self.player.x += x
 		self.player.y += y
+
+	def finish_current(self):
+		self.gamestate = 0
+
+	def next_level(self):
+		next_lvl = int(self.level[-1])
+
+		if next_lvl <= total_levels - 1:
+			next_lvl += 1
+			Game(next_lvl)
+		else:
+			print "THE END"
 
 	def loop(self):
 		while self.gamestate == 1:
@@ -124,5 +141,7 @@ class Game(object):
 				if event.type == KEYUP:
 					self.keypressed = 0
 
+		self.next_level()
+
 if __name__ == '__main__':
-	Game()
+	Game(1)
