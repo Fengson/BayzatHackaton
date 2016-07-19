@@ -24,7 +24,9 @@ class Game(object):
 		
 		self.level_total = 3 # Total amount of documents
 
-		print self.level
+		self.music = pygame.mixer.Sound("sounds/drums.wav")
+		self.music.stop()
+		self.music.play()
 
 		MAP = level_data[self.level]
 
